@@ -1,6 +1,11 @@
+import redis from "../lib/redis.js";
 import User from "../models/user.model.js";
 import { generateToken } from "../utils/generateToken.js";
 import { storeToken, storeTokenInCookies } from "../utils/storeToken.js";
+import jwt from "jsonwebtoken"
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 export const signup = async (req, res) => {
     const { name, email, password } = req.body;
@@ -34,4 +39,23 @@ export const signup = async (req, res) => {
         res.status(500).json({ success: false, message: error.message })
     }
 
+}
+
+export const logout = async (req, res) => {
+    try {
+        if (req.cookies.refreshToken) {
+            const decodedToken = jwt.verify(req.cookies.refreshToken, process.env.REFRESH_TOKEN_SECRET);
+
+            await redis.del(`refreshToken_${decodedToken.userId}`);
+        }
+
+        res.clearCookie("accessToken");
+
+        res.clearCookie("refreshToken");
+
+        res.status(200).json({ success: true, message: "Logged out successfully" });
+
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Server Error", error: error.message })
+    }
 }
