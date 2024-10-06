@@ -2,10 +2,10 @@
   "name": "mern-e-commerce-with-admin-dashboard",
   "version": "1.0.0",
   "description": "",
-  "main": "server/index.js",
+  "main": "server/server.js",
   "scripts": {
-    "dev": "nodemon server/index.js",
-    "start": "node server/index.js"
+    "dev": "nodemon server/server.js",
+    "start": "node server/server.js"
   },
   "keywords": [],
   "author": "Algrgawy",
