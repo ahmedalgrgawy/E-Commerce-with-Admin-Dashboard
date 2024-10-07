@@ -60,3 +60,35 @@ export const createProduct = async (req, res) => {
         return res.status(500).json({ message: error.message })
     }
 }
+
+export const deleteProduct = async (req, res) => {
+    try {
+        const productId = req.params.id;
+
+        const product = await Product.findById(productId);
+
+        if (!product) return res.status(404).json({ message: "Product not found" })
+
+        if (product.image) {
+
+            const public_id = product.image.split("/").pop().split(".")[0]; // Extract the public_id from the image URL
+
+            try {
+
+                await cloudinary.uploader.destroy(`products/${public_id}`);
+
+            } catch (error) {
+
+                return res.status(500).json({ message: error.message });
+
+            }
+        }
+
+        await product.findByIdAndDelete(productId);
+
+        return res.status(200).json({ success: true, message: "Product deleted successfully" })
+
+    } catch (error) {
+        return res.status(500).json({ message: error.message })
+    }
+}
