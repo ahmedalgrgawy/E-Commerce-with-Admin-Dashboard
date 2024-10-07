@@ -26,7 +26,7 @@ export const signup = async (req, res) => {
 
         storeTokenInCookies(res, accessToken, refreshToken)
 
-        res.status(201).json({
+        return res.status(201).json({
             success: true, message: "User created successfully", user: {
                 _id: user._id,
                 name: user.name,
@@ -36,7 +36,7 @@ export const signup = async (req, res) => {
         })
 
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message })
+        return res.status(500).json({ success: false, message: error.message })
     }
 
 }
@@ -64,7 +64,7 @@ export const login = async (req, res) => {
 
         storeTokenInCookies(res, accessToken, refreshToken)
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true, message: "Logged in successfully", user: {
                 _id: user._id,
                 name: user.name,
@@ -74,7 +74,7 @@ export const login = async (req, res) => {
         })
 
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message })
+        return res.status(500).json({ success: false, message: error.message })
     }
 
 }
@@ -93,10 +93,10 @@ export const logout = async (req, res) => {
 
         res.clearCookie("refreshToken");
 
-        res.status(200).json({ success: true, message: "Logged out successfully" });
+        return res.status(200).json({ success: true, message: "Logged out successfully" });
 
     } catch (error) {
-        res.status(500).json({ success: false, message: "Server Error", error: error.message })
+        return res.status(500).json({ success: false, message: "Server Error", error: error.message })
     }
 }
 
@@ -127,9 +127,9 @@ export const reCreateAccessToken = async (req, res) => {
             maxAge: 60 * 60 * 24 * 7 * 1000
         })
 
-        res.status(200).json({ success: true, message: "Access Token Recreated" })
+        return res.status(200).json({ success: true, message: "Access Token Recreated" })
 
     } catch (error) {
-        res.status(500).json({ success: false, message: "Server Error", error: error.message })
+        return res.status(500).json({ success: false, message: "Server Error", error: error.message })
     }
 }
