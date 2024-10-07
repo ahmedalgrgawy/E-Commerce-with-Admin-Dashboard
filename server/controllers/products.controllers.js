@@ -1,3 +1,4 @@
+import cloudinary from "../lib/cloudinary.js";
 import redis from "../lib/redis.js";
 import Product from "../models/products.model.js"
 export const getAllProducts = async (req, res) => {
@@ -37,7 +38,25 @@ export const getFeaturedProducts = async (req, res) => {
 export const createProduct = async (req, res) => {
     try {
 
-    } catch (error) {
+        const { title, description, price, image, category } = req.body;
 
+        let cloudinaryResponse = null;
+
+        if (image) {
+            cloudinaryResponse = await cloudinary.uploader.upload(image, { folder: "products" });
+        }
+
+        const product = await Product.create({
+            title,
+            description,
+            price,
+            image: cloudinaryResponse?.secure_url ? cloudinaryResponse.secure_url : "",
+            category,
+        });
+
+        return res.status(201).json(product)
+
+    } catch (error) {
+        return res.status(500).json({ message: error.message })
     }
 }
