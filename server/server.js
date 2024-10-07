@@ -8,6 +8,7 @@ import productsRouter from './routes/products.routes.js'
 import cartRoutes from './routes/cart.routes.js'
 import couponRoutes from './routes/coupon.routes.js'
 import paymentRoutes from "./routes/payment.routes.js";
+import analyticRoutes from "./routes/analytics.routes.js";
 
 dotenv.config()
 
@@ -29,6 +30,8 @@ app.use('/api/cart', cartRoutes)
 app.use('/api/coupon', couponRoutes)
 
 app.use("/api/payments", paymentRoutes);
+
+app.use("/analytics", analyticRoutes)
 
 app.listen(port, () => {
     connectDb()
