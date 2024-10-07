@@ -6,6 +6,7 @@ import { connectDb } from './lib/connectDb.js';
 import authRouter from './routes/auth.routes.js'
 import productsRouter from './routes/products.routes.js'
 import cartRoutes from './routes/cart.routes.js'
+import couponRoutes from './routes/coupon.routes.js'
 
 dotenv.config()
 
@@ -23,6 +24,8 @@ app.use('/api/auth', authRouter)
 app.use('/api/products', productsRouter)
 
 app.use('/api/cart', cartRoutes)
+
+app.use('/api/coupon', couponRoutes)
 
 app.listen(port, () => {
     connectDb()
