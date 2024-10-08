@@ -5,7 +5,6 @@ import { useAuthStore } from "../stores/auth";
 const Navbar = () => {
 
     const { user, isAdmin, logout, isLoading } = useAuthStore()
-    console.log(user);
 
     const cart = [1, 3, 4, 5]
 
