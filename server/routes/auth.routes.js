@@ -1,6 +1,6 @@
 import express from 'express'
-import { login, logout, reCreateAccessToken, signup,getProfile } from '../controllers/auth.controller.js';
-import {productsRouter} from "../middleware/auth.middleware.js"
+import { login, logout, reCreateAccessToken, signup, getProfile } from '../controllers/auth.controller.js';
+import { protectedRoute } from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
@@ -12,6 +12,6 @@ router.post("/logout", logout)
 
 router.post("/recreate-token", reCreateAccessToken)
 
-router.get("/profile",protectedRoute,getProfile)
+router.get("/profile", protectedRoute, getProfile)
 
 export default router;
