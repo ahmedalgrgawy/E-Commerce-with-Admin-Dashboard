@@ -5,6 +5,8 @@ import { useAuthStore } from "../stores/auth";
 const Navbar = () => {
 
     const { user, isAdmin, logout, isLoading } = useAuthStore()
+    console.log(user);
+
     const cart = [1, 3, 4, 5]
 
     return (
@@ -18,7 +20,7 @@ const Navbar = () => {
                         <Link to='/' className='text-white hover:text-emerald-400'>
                             Home
                         </Link>
-                        {user && (
+                        {(user && !isAdmin) && (
                             <Link to={'/cart'} className="relative group text-black hover:text-white bg-emerald-400 p-1">
                                 <ShoppingCart />
                                 {cart.length > 0 && (

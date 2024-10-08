@@ -52,7 +52,7 @@ export const useAuthStore = create((set, get) => ({
 
         try {
             const response = await axiosInstance.get('/auth/profile')
-            set({ user: response.data, checkingAuth: false, isAdmin: response.data.role === 'admin' })
+            set({ user: response.data, checkingAuth: false, isAdmin: response.data.user.role === 'admin' })
         } catch (error) {
             set({ checkingAuth: false, user: null, isAdmin: false })
         }

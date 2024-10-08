@@ -7,10 +7,11 @@ import { Toaster } from "react-hot-toast"
 import { useAuthStore } from "./stores/auth"
 import { useEffect } from "react"
 import LoadingSpinner from "./components/LoadingSpinner"
+import AdminDashboard from "./pages/AdminDashboard"
 
 const App = () => {
 
-  const { user, checkAuth, checkingAuth } = useAuthStore();
+  const { user, checkAuth, checkingAuth, isAdmin } = useAuthStore();
 
   useEffect(() => {
     checkAuth()
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/" element={!user ? <Navigate to={'/login'} /> : <Home />} />
           <Route path="/signup" element={!user ? <Signup /> : <Navigate to={"/"} />} />
           <Route path="/login" element={!user ? <Login /> : <Navigate to={"/"} />} />
+          <Route path="/admin-dashboard" element={user && isAdmin ? <AdminDashboard /> : <Navigate to={"/login"} />} />
         </Routes>
       </div>
       <Toaster />
