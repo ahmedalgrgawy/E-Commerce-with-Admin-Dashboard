@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { motion } from "framer-motion";
 import { ArrowRight, Loader, Lock, Mail, User, UserPlus } from "lucide-react";
-import { useAuthStore } from "../stores/auth";
+import { useAuthStore } from "../stores/useAuth";
 import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {

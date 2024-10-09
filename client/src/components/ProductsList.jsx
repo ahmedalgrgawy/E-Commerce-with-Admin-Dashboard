@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Trash, Star } from "lucide-react";
-import { useAdminStore } from '../stores/admin'
+import { useAdminStore } from '../stores/useAdmin'
 
 export const ProductsList = () => {
 

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { LogIn, Mail, Lock, ArrowRight, Loader } from "lucide-react";
-import { useAuthStore } from "../stores/auth";
+import { useAuthStore } from "../stores/useAuth";
 
 const Login = () => {
 

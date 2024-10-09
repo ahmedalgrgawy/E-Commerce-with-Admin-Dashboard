@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ProductsList } from '../components/ProductsList';
 import { AnalyticsTab } from '../components/AnalyticsTab';
 import { CreateProductForm } from '../components/CreateProductForm';
-import { useAdminStore } from '../stores/admin';
+import { useAdminStore } from '../stores/useAdmin';
 
 const tabs = [
     { id: "create", label: "Create Product", icon: PlusCircle },
