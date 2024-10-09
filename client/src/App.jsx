@@ -8,6 +8,7 @@ import { useAuthStore } from "./stores/auth"
 import { useEffect } from "react"
 import LoadingSpinner from "./components/LoadingSpinner"
 import AdminDashboard from "./pages/AdminDashboard"
+import { CategoryPage } from "./pages/CategoryPage"
 
 const App = () => {
 
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/signup" element={!user ? <Signup /> : <Navigate to={"/"} />} />
           <Route path="/login" element={!user ? <Login /> : <Navigate to={"/"} />} />
           <Route path="/admin-dashboard" element={user && isAdmin ? <AdminDashboard /> : <Navigate to={"/login"} />} />
+          <Route path="/category/:category" element={<CategoryPage />} />
         </Routes>
       </div>
       <Toaster />
