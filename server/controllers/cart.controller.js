@@ -9,9 +9,6 @@ export const getCartItems = async (req, res) => {
             return { ...product.toJSON(), quantity: item.quantity };
         });
 
-        console.log(cartItems);
-
-
         return res.status(200).json({ success: true, cartItems: cartItems })
 
     } catch (error) {
