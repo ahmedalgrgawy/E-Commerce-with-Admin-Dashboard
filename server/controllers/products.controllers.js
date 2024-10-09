@@ -61,7 +61,7 @@ export const getRecommendedProducts = async (req, res) => {
 
 export const getProductsByCategory = async (req, res) => {
     try {
-        const { category } = req.params.category
+        const { category } = req.params;
 
         const products = await Product.find({ category }).sort({ createdAt: -1 });
 
