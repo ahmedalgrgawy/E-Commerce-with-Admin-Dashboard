@@ -2,14 +2,15 @@ import Product from "../models/products.model.js";
 
 export const getCartItems = async (req, res) => {
     try {
-        const user = req.user;
-
-        const products = await Product.find({ _id: { $in: user.cartItems } });
+        const products = await Product.find({ _id: { $in: req.user.cartItems } });
 
         const cartItems = products.map((product) => {
-            const item = user.cartItems.find(cartItem => cartItem.id === product.id);
-            return { ...product.toJSON(), quantity: item.quantity }
-        })
+            const item = req.user.cartItems.find((cartItem) => cartItem.id === product.id);
+            return { ...product.toJSON(), quantity: item.quantity };
+        });
+
+        console.log(cartItems);
+
 
         return res.status(200).json({ success: true, cartItems: cartItems })
 
@@ -30,7 +31,7 @@ export const addToCart = async (req, res) => {
         if (alreadyExist) {
             alreadyExist.quantity += 1;
         } else {
-            user.cartItems.push({ id: productId });
+            user.cartItems.push(productId);
         }
 
         await user.save();
