@@ -37,6 +37,11 @@ export const useAdminStore = create((set, get) => ({
 
             await axiosInstance.delete(`/products/delete-product/${id}`)
 
+            set((prevProducts) => ({
+                products: prevProducts.products.filter((product) => product._id !== id),
+                loading: false,
+            }));
+
             toast.success("Product deleted successfully")
 
         } catch (error) {
