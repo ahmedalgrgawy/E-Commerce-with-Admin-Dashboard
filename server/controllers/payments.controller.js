@@ -12,27 +12,25 @@ export const createCheckoutSession = async (req, res) => {
             return res.status(400).json({ message: "Invalid products format" });
         }
 
+
         let totalAmount = 0;
 
         const lineItems = products.map((product) => {
-
-            const amount = Math.round(product.price * 100)// cents for stripe
-
+            const amount = Math.round(product.price * 100); // stripe wants u to send in the format of cents
             totalAmount += amount * product.quantity;
 
             return {
                 price_data: {
-                    currency: "egp",
+                    currency: "usd",
                     product_data: {
                         name: product.name,
-                        image: [product.image]
+                        images: [product.image],
                     },
-                    unit_amount: amount
+                    unit_amount: amount,
                 },
-                quantity: product.quantity
-            }
-
-        })
+                quantity: product.quantity || 1,
+            };
+        });
 
         let coupon = null
 
@@ -47,7 +45,7 @@ export const createCheckoutSession = async (req, res) => {
         }
 
         const session = await stripe.checkout.sessions.create({
-            payment_method_types: ["card", "paypal"],
+            payment_method_types: ["card"],
             line_items: lineItems,
             mode: "payment",
             success_url: `${process.env.CLIENT_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
@@ -57,10 +55,10 @@ export const createCheckoutSession = async (req, res) => {
                 userId: req.user._id.toString(),
                 couponCode: couponCode || "",
                 products: JSON.stringify(
-                    products.map((product) => ({
-                        id: product._id,
-                        quantity: product.quantity,
-                        price: product.price,
+                    products.map((p) => ({
+                        id: p._id,
+                        quantity: p.quantity,
+                        price: p.price,
                     }))
                 ),
             }
