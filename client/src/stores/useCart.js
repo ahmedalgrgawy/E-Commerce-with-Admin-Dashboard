@@ -7,6 +7,7 @@ export const userCartStore = create((set, get) => ({
     coupon: null,
     total: 0,
     subTotal: 0,
+    isCouponApplied: false,
     recommendations: [],
     isLoading: false,
 
@@ -21,6 +22,17 @@ export const userCartStore = create((set, get) => ({
         } catch (error) {
             // toast.error("Cart is Empty")
         }
+    },
+
+    clearCart: async () => {
+
+        try {
+            await axiosInstance.post('cart/clear')
+            set({ cart: [], coupon: null, total: 0, subtotal: 0 });
+        } catch (error) {
+            toast.error(error.response.data.message || "An error occurred while clearing cart")
+        }
+
     },
 
     addToCart: async (product) => {
@@ -122,4 +134,14 @@ export const userCartStore = create((set, get) => ({
 
         set({ subtotal, total });
     },
+
+    applyCoupon: async (couponCode) => { },
+
+    getMyCoupon: async () => {
+
+    },
+
+    removeCoupon: async (couponCode) => {
+
+    }
 }))

@@ -11,6 +11,8 @@ import AdminDashboard from "./pages/AdminDashboard"
 import { CategoryPage } from "./pages/CategoryPage"
 import { userCartStore } from "./stores/useCart"
 import Cart from "./pages/Cart"
+import { PurchaseSuccessPage } from "./pages/PurchaseSuccessPage"
+import PurchaseCancelPage from "./pages/PurchaseCancelPage"
 
 const App = () => {
 
@@ -22,8 +24,9 @@ const App = () => {
   }, [checkAuth])
 
   useEffect(() => {
+    if (!user) return
     getCart()
-  }, [getCart])
+  }, [getCart, user])
 
   if (checkingAuth) return <LoadingSpinner />
 
@@ -42,8 +45,12 @@ const App = () => {
           <Route path="/login" element={!user ? <Login /> : <Navigate to={"/"} />} />
           <Route path="/admin-dashboard" element={user && isAdmin ? <AdminDashboard /> : <Navigate to={"/login"} />} />
           <Route path="/category/:category" element={<CategoryPage />} />
-
           <Route path="/cart" element={user ? <Cart /> : <Navigate to={"/login"} />} />
+          <Route
+            path='/success'
+            element={user ? <PurchaseSuccessPage /> : <Navigate to='/login' />}
+          />
+          <Route path='/cancel-order' element={user ? <PurchaseCancelPage /> : <Navigate to='/login' />} />
         </Routes>
       </div>
       <Toaster />
