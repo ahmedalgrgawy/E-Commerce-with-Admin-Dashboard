@@ -1,12 +1,13 @@
 import { ShoppingCart, UserPlus, LogIn, LogOut, Lock, Loader } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../stores/useAuth";
+import { userCartStore } from "../stores/useCart";
 
 const Navbar = () => {
 
     const { user, isAdmin, logout, isLoading } = useAuthStore()
 
-    const cart = [1, 3, 4, 5]
+    const { cart } = userCartStore()
 
     return (
         <header className='fixed top-0 left-0 w-full bg-gray-900 bg-opacity-90 backdrop-blur-md shadow-lg z-40 transition-all duration-300 border-b border-emerald-800'>
@@ -19,7 +20,7 @@ const Navbar = () => {
                         <Link to='/' className='text-white hover:text-emerald-400'>
                             Home
                         </Link>
-                        {(user && !isAdmin) && (
+                        {user && (
                             <Link to={'/cart'} className="relative group text-black hover:text-white bg-emerald-400 p-1">
                                 <ShoppingCart />
                                 {cart.length > 0 && (
