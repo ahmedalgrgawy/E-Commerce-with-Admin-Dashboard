@@ -9,9 +9,6 @@ export const getCartItems = async (req, res) => {
             return { ...product.toJSON(), quantity: item.quantity };
         });
 
-        console.log(cartItems);
-
-
         return res.status(200).json({ success: true, cartItems: cartItems })
 
     } catch (error) {
@@ -73,7 +70,7 @@ export const updateQuantity = async (req, res) => {
 
 export const removeAllFromCart = async (req, res) => {
     try {
-        const { productId } = req.body;
+        const { productId } = req.params;
         const user = req.user;
 
         if (!productId) {

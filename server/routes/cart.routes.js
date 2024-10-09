@@ -10,6 +10,6 @@ router.post("/add", protectedRoute, addToCart)
 
 router.put("/update/:id", protectedRoute, updateQuantity)
 
-router.delete("/remove", protectedRoute, removeAllFromCart)
+router.delete("/remove/:id", protectedRoute, removeAllFromCart)
 
 export default router;
