@@ -1,3 +1,4 @@
+import redis from "../lib/redis.js";
 import Product from "../models/products.model.js";
 
 export const updateFeaturedProductsCache = async () => {

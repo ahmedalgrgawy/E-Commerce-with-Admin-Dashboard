@@ -101,19 +101,17 @@ export const createProduct = async (req, res) => {
 export const toggleFeature = async (req, res) => {
     try {
 
-        const { productId } = req.params;
-
-        const product = await Product.findById(productId);
+        const product = await Product.findById(req.params.id);
 
         if (!product) return res.status(404).json({ message: "Product not found" })
 
         product.isFeatured = !product.isFeatured;
 
-        await product.save();
+        const updatedProduct = await product.save();
 
         await updateFeaturedProductsCache();
 
-        return res.status(200).json({ success: true, message: "Feature toggled successfully" })
+        return res.status(200).json({ success: true, message: "Feature toggled successfully", updatedProduct })
 
     } catch (error) {
         return res.status(500).json({ message: error.message })
@@ -122,9 +120,7 @@ export const toggleFeature = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
     try {
-        const { productId } = req.params.id;
-
-        const product = await Product.findById(productId);
+        const product = await Product.findById(req.params.id)
 
         if (!product) return res.status(404).json({ message: "Product not found" })
 
@@ -143,7 +139,7 @@ export const deleteProduct = async (req, res) => {
             }
         }
 
-        await product.findByIdAndDelete(productId);
+        await product.findByIdAndDelete(req.params.id);
 
         return res.status(200).json({ success: true, message: "Product deleted successfully" })
 
