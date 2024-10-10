@@ -11,7 +11,9 @@ export const createStripCoupon = async (discountPercentage) => {
 }
 
 export const createNewCoupon = async (userId) => {
+
     await Coupon.findOneAndDelete({ userId });
+
     const newCoupon = new Coupon({
         code: Math.random().toString(36).substring(2, 8),
         discountPercentage: 10,
