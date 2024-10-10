@@ -14,7 +14,7 @@ const tabs = [
 
 const AdminDashboard = () => {
 
-    const [activeTab, setActiveTab] = useState('products');
+    const [activeTab, setActiveTab] = useState('analytics');
 
     const { getAllProducts } = useAdminStore()
 
