@@ -22,8 +22,6 @@ const Home = () => {
         fetchFeaturedProducts();
     }, [fetchFeaturedProducts]);
 
-    console.log(featuredProducts);
-
 
     return (
         <div className='relative min-h-screen text-white overflow-hidden'>
