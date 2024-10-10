@@ -58,6 +58,20 @@ export const useAuthStore = create((set, get) => ({
         }
     },
 
+    reCreateAccessToken: async () => {
+        if (get().checkingAuth) return;
+
+        set({ checkingAuth: true });
+        try {
+            const response = await axiosInstance.post("/auth/recreate-token");
+            set({ checkingAuth: false });
+            toast.success("Access token refreshed successfully");
+        } catch (error) {
+            set({ user: null, checkingAuth: false });
+            throw error;
+        }
+    },
+
     logout: async () => {
         set({ isLoading: true })
 
@@ -74,3 +88,39 @@ export const useAuthStore = create((set, get) => ({
         }
     }
 }))
+
+let refreshPromise = null;
+
+axiosInstance.interceptors.response.use(
+    response => response,
+    async error => {
+        const originalRequest = error.config;
+        if (error.response?.status === 401 && !originalRequest._retry) {
+
+            originalRequest._retry = true;
+
+            try {
+
+                if (refreshPromise) {
+                    await refreshPromise;
+                    return axiosInstance(originalRequest);
+                }
+
+
+                refreshPromise = useAuthStore.get().reCreateAccessToken()
+
+                await refreshPromise;
+
+                refreshPromise = null
+
+                return axiosInstance(originalRequest);
+
+
+            } catch (refreshError) {
+                useAuthStore.get().logout()
+                return Promise.reject(refreshError);
+            }
+
+        }
+    }
+)
