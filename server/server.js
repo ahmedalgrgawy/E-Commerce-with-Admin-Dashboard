@@ -31,7 +31,7 @@ app.use('/api/coupon', couponRoutes)
 
 app.use("/api/payments", paymentRoutes);
 
-app.use("/analytics", analyticRoutes)
+app.use("/api/analytics", analyticRoutes)
 
 app.listen(port, () => {
     connectDb()
