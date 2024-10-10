@@ -64,8 +64,8 @@ export const createCheckoutSession = async (req, res) => {
             }
         })
 
-        if (totalAmount >= 500000) {
-            await createNewCoupon(req.user._id)
+        if (totalAmount >= 2000) {
+            await createNewCoupon(req.user._id);
         }
 
         return res.status(200).json({
