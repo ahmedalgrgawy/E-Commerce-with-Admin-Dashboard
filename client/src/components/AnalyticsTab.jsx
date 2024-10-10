@@ -21,9 +21,6 @@ export const AnalyticsTab = () => {
 
         const response = await axiosInstance.get("/analytics");
 
-        console.log(response.data.dailySalesData);
-
-
         setAnalyticsData(response.data.analyticsData);
 
         setDailySalesData(response.data.dailySalesData);
